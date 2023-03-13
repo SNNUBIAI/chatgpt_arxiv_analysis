@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+#output
+arXivChatGPT/
+arXivChatGPT_text/
+arXivChatGPT_wordcloud/
