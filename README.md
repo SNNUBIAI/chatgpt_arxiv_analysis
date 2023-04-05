@@ -22,3 +22,13 @@ python readpdf.py
 ```
 python txt2wordcloud.py
 ```
+
+## Citation
+```
+@article{liu2023summary,
+      title={Summary of ChatGPT/GPT-4 Research and Perspective Towards the Future of Large Language Models}, 
+      author={Liu, Yiheng and Han, Tianle and Ma, Siyuan and Zhang, Jiayue and Yang, Yuanyuan and Tian, Jiaming and He, Hao and Li, Antong and He, Mengshen and Liu, Zhengliang and Wu, Zihao and Zhu, Dajiang and Li, Xiang and Qiang, Ning and Shen, Dingang and Liu, Tianming and Ge, Bao},
+      journal={arXiv preprint arXiv:2304.01852},
+      year={2023}
+}
+```
