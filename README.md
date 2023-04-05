@@ -1,5 +1,5 @@
 # chatgpt_arxiv_analysis
-Analyzing chatgpt research trends.
+Summary of ChatGPT/GPT-4 Research and Perspective Towards the Future of Large Language Models [arxiv](https://arxiv.org/abs/2304.01852)
 
 ## Example
 You can get the result by following the steps below.
