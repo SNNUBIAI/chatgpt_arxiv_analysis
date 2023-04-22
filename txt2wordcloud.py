@@ -6,8 +6,8 @@ output_dir = "./arXivChatGPT_wordcloud/"
 if not os.path.exists(output_dir):
     os.mkdir(output_dir)
 
-skip_existing = True  # set this to True if you want to skip existing wordcloud files
-
+skip_existing = False  # set this to True if you want to skip existing wordcloud files
+only_all = True
 txt = ''
 filenames = os.listdir(root)
 
@@ -24,12 +24,14 @@ for name in filenames:
         text = f.read()
 
     txt += text
+    if not only_all:
+        wd = wordcloud.WordCloud(scale=20)
+        wd.generate(text)
 
-    wd = wordcloud.WordCloud()
-    wd.generate(text)
-
-    wd.to_file(output_path)
-
-wd = wordcloud.WordCloud()
+        wd.to_file(output_path)
+stopwords = wordcloud.STOPWORDS
+content = ['A', 'D', 'show', 'even', 'number', 'use', 'based', 'example', 'training', 'different', 'data', 'dataset', 'three', 'shown', 'part', 'u', 'J', 'could', 'n', 'X', 'include', 'set', 'way', 'analysi', 'see', 'provide', 'first', 'L', 'R', 'make','Table','Therefore','including', 'arXiv', 'preprint', 'like', 'one', 'well', 'given','would', 'Figure', 'i', 'many', 'need', 'new', 'may', 'et al', 'two', 'et', 'also', 'however', 'al', 'm', 'e', 'g', 'M', 's', 'B', 'v', 'P', 'C', 'g', 'preprint.arXiv', 'using', 'f']
+stopwords.update(content)
+wd = wordcloud.WordCloud(max_words=70, scale=20, stopwords=stopwords)
 wd.generate(txt)
 wd.to_file(os.path.join(output_dir, "all.png"))
