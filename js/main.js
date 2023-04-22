@@ -118,12 +118,12 @@ function readExcelFile(url) {
         const range = XLSX.utils.decode_range(sheet['!ref'])
         const rows = []
         for (let i = range.s.r + 1; i <= range.e.r; i++) {
-        const row = []
-        for (let j = range.s.c; j <= range.e.c; j++) {
-            const cell = sheet[XLSX.utils.encode_cell({r: i, c: j})]
-            row.push(cell ? cell.v : undefined)
-        }
-        rows.push(row)
+            const row = []
+            for (let j = range.s.c; j <= range.e.c; j++) {
+                const cell = sheet[XLSX.utils.encode_cell({r: i, c: j})]
+                row.push(cell ? cell.v : undefined)
+            }
+            rows.push(row)
         }
         renderChart(rows)
     }
