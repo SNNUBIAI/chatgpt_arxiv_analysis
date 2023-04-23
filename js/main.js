@@ -80,6 +80,7 @@ function renderChart(data) {
     // 监听日期条的拖动事件
     const dateRange1 = document.getElementById('date-range1')
     const dateRange2 = document.getElementById('date-range2')
+    const dateDisplay = document.getElementById('date-display')
 
     dateRange1.addEventListener('input', event => {
         const index = event.target.value - 1
@@ -88,9 +89,41 @@ function renderChart(data) {
     })
     dateRange2.addEventListener('input', event => {
         const index = event.target.value - 1
-        chart2.data.datasets[0].data = countsByCategoryArray.slice(0, index + 1)
+        const selectedDate = dates[index]
+
+        dateDisplay.textContent = selectedDate
+    
+        
+        const rowsByDate = new Map()
+        for (const row of data) {
+            const date = row[2]
+            if (!rowsByDate.has(date)) {
+                rowsByDate.set(date, [])
+            }
+            rowsByDate.get(date).push(row)
+        }
+
+        // Compute cumulative counts for each category up to the selected date
+        const countsByCategoryCumulative = new Map()
+        for (const [date, rows] of rowsByDate) {
+            if (date <= selectedDate) {
+                for ( const row of rows) {
+                    const category = row[3]
+                    const cumulativeCount = countsByCategoryCumulative.get(category) || 0
+                    countsByCategoryCumulative.set(category, cumulativeCount + 1)
+                }
+            }
+        }
+    
+        // Convert cumulative counts Map to arrays for chart data
+        const categoriesCumulative = Array.from(countsByCategoryCumulative.keys())
+        const countsByCategoryCumulativeArray = categoriesCumulative.map(category => countsByCategoryCumulative.get(category))
+
+        chart2.data.datasets[0].data = countsByCategoryCumulativeArray
+        chart2.data.labels = categoriesCumulative
         chart2.update()
     })
+    
 
     // 动态计算进度条的值
     const rangeMax = dates.length
