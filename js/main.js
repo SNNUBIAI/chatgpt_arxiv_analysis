@@ -137,6 +137,68 @@ function renderChart(data) {
     dateRange2.value = rangeMax
 }
 
+function renderCumChart(data) {
+    const countsByDate = new Map()
+    for (let i = 0; i < data.length; i++) {
+        const row = data[i]
+        const date = row[2]
+        const count = countsByDate.get(date) || 0
+        countsByDate.set(date, count + 1)
+    }
+
+    const dates = Array.from(countsByDate.keys())
+    const counts = dates.map(date => countsByDate.get(date))
+
+    const cumulativeCounts = counts.reduce((acc, val) => {
+        acc.push(acc.length === 0 ? val : acc[acc.length - 1] + val)
+        return acc
+    }, [])
+
+    const canvas = document.getElementById('chart3')
+    const context = canvas.getContext('2d')
+
+    const chart = new Chart(context, {
+        type: 'bar',
+        data: {
+            labels: dates,
+            datasets: [{
+                label: 'Cumulative Paper Submissions',
+                data: cumulativeCounts,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes :[{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    })
+
+    const dateRange = document.getElementById('date-range3')
+    const dateDisplay = document.getElementById('date-display2')
+
+    dateRange.addEventListener('input', event => {
+        const index = event.target.value - 1
+        const selectedDate = dates[index]
+        dateDisplay.textContent = selectedDate
+
+        chart.data.datasets[0].data = cumulativeCounts.slice(0, index + 1)
+        chart.update()
+    })
+
+    const rangeMax = dates.length
+    const rangeStep = 1
+    dateRange.setAttribute('max', rangeMax)
+    dateRange.setAttribute('step', rangeStep)
+    dateRange.value = rangeMax
+}
+
 // 读取Excel文件
 function readExcelFile(url) {
     const request = new XMLHttpRequest()
@@ -159,6 +221,7 @@ function readExcelFile(url) {
             rows.push(row)
         }
         renderChart(rows)
+        renderCumChart(rows)
     }
     request.send()
 }
