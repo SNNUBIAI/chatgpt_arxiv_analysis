@@ -1,5 +1,5 @@
 # chatgpt_arxiv_analysis
-[Summary of ChatGPT-Related Research and Perspective Towards the Future of Large Language Models]([https://arxiv.org/abs/2304.01852](https://www.sciencedirect.com/science/article/pii/S2950162823000176))
+[Summary of ChatGPT-Related Research and Perspective Towards the Future of Large Language Models](https://www.sciencedirect.com/science/article/pii/S2950162823000176)
 
 ## Example
 You can get the result by following the steps below.
